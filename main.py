@@ -24,7 +24,7 @@ def main(page:Page):
 		try:
 			# INPUT TO DATABASE
 			c = conn.cursor()
-			c.execute("INSERT INTO users (name,age,contact,email,address,gender) VALUES(?,?,?,?,?,?)",(name.value,age.value,contact.value,email.value,address.value,gender.value))
+			c.execute("INSERT INTO users (nome,idade,contato,email,endereco,genero) VALUES(?,?,?,?,?,?)",(nome.value,idade.value,contato.value,email.value,endereco.value,genero.value))
 			conn.commit()
 			print("success")
 
@@ -52,12 +52,12 @@ def main(page:Page):
 
 	# CREATE FIELD FOR INPUT
 
-	name = TextField(label="nome")
-	age = TextField(label="idade")
-	contact = TextField(label="contato")
+	nome = TextField(label="nome")
+	idade = TextField(label="idade")
+	contato = TextField(label="contato")
 	email = TextField(label="email")
-	address = TextField(label="endereco")
-	gender = RadioGroup(content=Column([
+	endereco = TextField(label="endereco")
+	genero = RadioGroup(content=Column([
 		Radio(value="homem",label="Homem"),
 		Radio(value="Mulher",label="Mulher")
 
@@ -79,12 +79,12 @@ def main(page:Page):
 				on_click=hidecon
 					),
 					],alignment="spaceBetween"),
-				name,
-				age,
-				contact,
+				nome,
+				idade,
+				contato,
 				email,
-				gender,
-				address,
+				genero,
+				endereco,
 				FilledButton("Guardar",
 				on_click=savedata
 					)

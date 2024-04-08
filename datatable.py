@@ -23,7 +23,7 @@ def showdelete(e):
 		c = conn.cursor()
 		c.execute("DELETE FROM users WHERE id=?", (myid,))
 		conn.commit()
-		print("success delete")
+		print("dados apagados")
 		tb.rows.clear()	
 		calldb()
 		tb.update()
@@ -54,9 +54,9 @@ def updateandsave(e):
 	try:
 		myid = id_edit.value
 		c = conn.cursor()
-		c.execute("UPDATE users SET name=?, contact=?, age=?, gender=?, email=?, address=? WHERE id=?", (name_edit.value, contact_edit.value, age_edit.value, gender_edit.value, email_edit.value, address_edit.value, myid))
+		c.execute("UPDATE users SET nome=?, contato=?, idade=?, genero=?, email=?, endereco=? WHERE id=?", (name_edit.value, contact_edit.value, age_edit.value, gender_edit.value, email_edit.value, address_edit.value, myid))
 		conn.commit()
-		print("success Edit ")
+		print("dados editados ")
 		tb.rows.clear()	
 		calldb()
 		dlg.visible = False
@@ -91,12 +91,12 @@ dlg = Container(
 def showedit(e):
 	data_edit = e.control.data
 	id_edit.value = data_edit['id']
-	name_edit.value = data_edit['name']
-	age_edit.value = data_edit['age']
-	contact_edit.value = data_edit['contact']
-	gender_edit.value = data_edit['gender']
+	name_edit.value = data_edit['nome']
+	age_edit.value = data_edit['idade']
+	contact_edit.value = data_edit['contato']
+	gender_edit.value = data_edit['genero']
 	email_edit.value = data_edit['email']
-	address_edit.value = data_edit['address']
+	address_edit.value = data_edit['endereco']
 
 	dlg.visible = True
 	dlg.update()
@@ -108,7 +108,7 @@ def calldb():
 	users = c.fetchall()
 	print(users)
 	if not users == "":
-		keys = ['id', 'name', 'contact', 'age', 'gender', 'email', 'address']
+		keys = ['id', 'nome', 'contato', 'idade', 'genero', 'email', 'endereco']
 		result = [dict(zip(keys, values)) for values in users]
 		for x in result:
 			tb.rows.append(
@@ -126,12 +126,12 @@ def calldb():
 
                         		),
                         	])),
-                        DataCell(Text(x['name'])),
-                        DataCell(Text(x['age'])),
-                        DataCell(Text(x['contact'])),
+                        DataCell(Text(x['nome'])),
+                        DataCell(Text(x['idade'])),
+                        DataCell(Text(x['contato'])),
                         DataCell(Text(x['email'])),
-                        DataCell(Text(x['address'])),
-                        DataCell(Text(x['gender'])),
+                        DataCell(Text(x['endereco'])),
+                        DataCell(Text(x['genero'])),
                     ],
                 ),
 
