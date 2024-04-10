@@ -80,7 +80,7 @@ dlg = Container(
 				gender_edit,
 				email_edit,
 				address_edit,
-				ElevatedButton("Atualizar",on_click=updateandsave)
+				ElevatedButton("Atualizar",on_click=updateandsave,tooltip="Atualizar")
 
 				])
 )
@@ -117,12 +117,14 @@ def calldb():
                         DataCell(Row([
                         	IconButton(icon="create",icon_color="blue",
                         		data=x,
-                        		on_click=showedit
+                        		on_click=showedit,
+                                tooltip="Editar"
 
                         		),
-                        	IconButton(icon="delete",icon_color="red",
+                        	IconButton(icon="delete", icon_color="red",
                         		data=x['id'],
-                        	on_click=showdelete
+                        	on_click=showdelete,
+                            tooltip="Apagar"
 
                         		),
                         	])),
@@ -140,7 +142,45 @@ def calldb():
 
 calldb()
 
+def buscar(e):
+    nome = e.control.data
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE nome=? ORDER BY asc",nome)
+    users = c.fetchall()
+    print(users)
+    if not users == "":
+       keys = ['id', 'nome', 'contato', 'idade', 'genero', 'email', 'endereco']
+       result = [dict(zip(keys, values)) for values in users]
+       for x in result:
+        tb.rows.append(
+				DataRow(
+                    cells=[
+                        DataCell(Row([
+                        	IconButton(icon="create",icon_color="blue",
+                        		data=x,
+                        		on_click=showedit,
+                                tooltip="Editar"
 
+                        		),
+                        	IconButton(icon="delete", icon_color="red",
+                        		data=x['id'],
+                        	on_click=showdelete,
+                            tooltip="Apagar"
+
+                        		),
+                        	])),
+                        DataCell(Text(x['nome'])),
+                        DataCell(Text(x['idade'])),
+                        DataCell(Text(x['contato'])),
+                        DataCell(Text(x['email'])),
+                        DataCell(Text(x['endereco'])),
+                        DataCell(Text(x['genero'])),
+                    ],
+                ),
+
+		)
+
+buscar()
 
 dlg.visible = False
 mytable = Column([

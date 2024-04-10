@@ -1,14 +1,15 @@
 from flet import *
 # IMPORT YOU CREATE TABLE 
 from myaction import create_table
-from datatable import mytable,tb,calldb
+from datatable import mytable,tb,calldb,buscar
 import sqlite3
 conn = sqlite3.connect("db/dbone.db",check_same_thread=False)
 
 def main(page:Page):
-
+    
 	# AND RUN SCRIPT FOR CREATE TABLE WHEN FLET FIRST RUN
 	create_table()
+    
 
 	page.scroll = "auto"
 
@@ -42,7 +43,9 @@ def main(page:Page):
 
 			# REFRESH TABLE
 			tb.rows.clear()
+   
 			calldb()
+           
 			tb.update()
 			page.update()
 
@@ -51,7 +54,7 @@ def main(page:Page):
 			print(e)
 
 	# CREATE FIELD FOR INPUT
-
+    
 	nome = TextField(label="nome")
 	idade = TextField(label="idade")
 	contato = TextField(label="contato")
@@ -62,8 +65,10 @@ def main(page:Page):
 		Radio(value="Mulher",label="Mulher")
 
 		]))
-
+    
 	# CREATE MODAL INPUT FOR ADD NEW DATA 
+     
+  
 	inputcon = Card(
        
 		# ADD SLIDE LEFT EFFECT
@@ -94,14 +99,23 @@ def main(page:Page):
 		)
 
 		)
-
-
+                      
+   
 	page.add(
 	Column([
 		Text("ESCOLAR APP",size=30,weight="bold"),
-		ElevatedButton("Cadastrar",bgcolor="blue200",
-		on_click=showInput
+		
+		
+        Row(
+            
+            [
+            
+        ElevatedButton("Cadastrar",bgcolor="green400",
+		on_click=showInput   
 		),
+        
+        TextField(label="procurar",on_change= buscar)
+             ]),
 		mytable,
 		# AND DIALOG FOR ADD DATA
 		inputcon 
@@ -109,7 +123,9 @@ def main(page:Page):
 
 		# NOTICE IF YOU ERROR
 		# DISABLE import Datatable like this
-		])
+		]
+        
+        )
 
 		)
 
